@@ -37,7 +37,7 @@ python main.py --base configs/ffhq_transformer_bert_2D.yaml -t True --gpus 0,1
 
 In the logs/ folder, download and extract  the FFHQ BERT:
 ```
-gdown --id '18fF0sTArNjD-h4fVvp2T3vulDgbPf_5P'
+gdown --id '1YGDd8XyycKgBp_whs9v1rkYdYe4Oxfb3'
 tar -xvzf 2021-10-14T16-32-28_ffhq_transformer_bert_2D.tar.gz
 ```
 folders and place them into logs.
