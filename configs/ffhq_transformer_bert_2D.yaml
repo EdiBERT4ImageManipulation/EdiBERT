@@ -1,0 +1,62 @@
+model:
+  base_learning_rate: 4.5e-06
+  target: taming.models.bert_transformer.BertTransformer
+  params:
+    monitor: val/loss_epoch
+    unconditional: True
+    cond_stage_key: None
+    pkeep_train_min: 0.2
+    pkeep_train: 0.5
+    prand: 0.9
+    pkeep_variable: True
+    masking_2D: True
+    transformer_config:
+      target: taming.modules.transformer.mingpt.GPT
+      params:
+        vocab_size: 1024
+        block_size: 260
+        n_layer: 32
+        n_head: 16
+        n_embd: 1024
+        n_unmasked: 512
+    first_stage_config:
+      target: taming.models.vqgan.VQModel
+      params:
+        ckpt_path: logs/2021-04-23T18-19-01_ffhq_vqgan/checkpoints/vqgan.ckpt
+        embed_dim: 256
+        n_embed: 1024
+        ddconfig:
+          double_z: false
+          z_channels: 256
+          resolution: 256
+          in_channels: 3
+          out_ch: 3
+          ch: 128
+          ch_mult:
+          - 1
+          - 1
+          - 2
+          - 2
+          - 4
+          num_res_blocks: 2
+          attn_resolutions:
+          - 16
+          dropout: 0.0
+        lossconfig:
+          target: taming.modules.losses.DummyLoss
+    cond_stage_config:
+      target: None
+
+data:
+  target: main.DataModuleFromConfig
+  params:
+    batch_size: 3
+    num_workers: 3
+    train:
+      target: taming.data.faceshq.FFHQTrain
+      params:
+        size: 256
+    validation:
+      target: taming.data.faceshq.FFHQValidation
+      params:
+        size: 256
