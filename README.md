@@ -15,7 +15,7 @@ conda activate edibert
 ### FFHQ
 Download FFHQ dataset (https://github.com/NVlabs/ffhq-dataset) and put it into `data/ffhq/`.
 
-### Training
+### Training BERT
 
 In the logs/ folder, download and extract the FFHQ VQGAN:
 ```
@@ -34,6 +34,12 @@ python main.py --base configs/ffhq_transformer_bert_2D.yaml -t True --gpus 0,1
 
 
 ### Running pre-trained BERT on composite/scribble-edited images
+
+In the logs/ folder, download and extract the FFHQ VQGAN:
+```
+gdown --id '1P_wHLRfdzf1DjsAH_tG10GXk9NKEZqTg'
+tar -xvzf 2021-04-23T18-19-01_ffhq_vqgan.tar.gz
+```
 
 In the logs/ folder, download and extract  the FFHQ BERT:
 ```
