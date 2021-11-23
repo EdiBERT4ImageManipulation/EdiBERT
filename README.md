@@ -68,4 +68,4 @@ python scripts/sample_mask_likelihood_maximization.py -r logs/2021-10-14T16-32-2
 
 ### Notebooks for playing with completion/denoising with BERT
 
-Notebooks can be found in `scripts/`.
+Notebooks for image denoising and image inpainting can also be found in the main folder.
