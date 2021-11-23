@@ -1,11 +1,11 @@
 # EdiBERT, a generative model for image editing
 
-EdiBERT is a bi-directional generative model suited for image manipulation. The same EdiBERT model deriving from a single training can be used on a wide variety of tasks.
+EdiBERT is a generative model based on a bi-directional transformer, suited for image manipulation. The same EdiBERT model, derived from a single training, can be used on a wide variety of tasks.
 
 ![edibert_example](https://user-images.githubusercontent.com/94860822/143056718-34d5352f-54bc-4a42-9bc0-63aa9a077b98.PNG)
 
 We follow the implementation of Taming-Transformers (https://github.com/CompVis/taming-transformers).
-Modifications of the  can be found in: taming/models/bert_transformer.py
+Main modifications can be found in: `taming/models/bert_transformer.py` ; `scripts/sample_mask_likelihood_maximization.py`.
 
 ## Requirements
 A suitable [conda](https://conda.io/) environment named `edibert` can be created
@@ -69,6 +69,9 @@ python scripts/sample_mask_likelihood_maximization.py -r logs/2021-10-14T16-32-2
 --device 0 --random_order \
 --mask_collage --collage_frequency 3 --gaussian_smoothing_collage
 ```
+
+The samples can then be found in `logs/my_model/samples/`.
+Here, the `--batch_size` argument corresponds to the number of EdiBERT generations per image.
 
 ### Notebooks for playing with completion/denoising with BERT
 
