@@ -1,5 +1,7 @@
 # EdiBERT, a generative model for image editing
 
+EdiBERT is a bi-directional generative model suited for image manipulation. The same EdiBERT model deriving from a single training can be used on a wide variety of tasks.
+
 We follow the implementation of Taming-Transformers (https://github.com/CompVis/taming-transformers).
 Modifications of the  can be found in: taming/models/bert_transformer.py
 
