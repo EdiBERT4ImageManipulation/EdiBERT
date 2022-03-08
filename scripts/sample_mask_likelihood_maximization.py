@@ -492,6 +492,6 @@ if __name__ == "__main__":
         z = maximize_token_likelihood(model, img, mask, opt)
         xz = perceptual_optimization(model, z, img, mask, opt)
 
-        save_batch_images(completed_img, logdir, imgname, key="samples", cond_key=None)
+        save_batch_images(xz, logdir, imgname, key="samples", cond_key=None)
 
     print("done.")
