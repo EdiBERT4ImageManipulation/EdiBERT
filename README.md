@@ -59,7 +59,7 @@ python scripts/sample_mask_likelihood_maximization.py -r logs/2021-10-14T16-32-2
 --image_folder data/ffhq_collages/ --mask_folder data/ffhq_collages_masks/ --image_list data/ffhq_collages.txt --keep_img \
 --dilation_sampling 1 -k 100 -t 1.0 --batch_size 5 --bert --epochs 2  \
 --device 0 --random_order \
---mask_collage --collage_frequency 3 --gaussian_smoothing_collage
+--mask_collage --collage_frequency 3 --gaussian_smoothing_collage \
 --num_optim_steps 200
 ```
 
@@ -69,7 +69,7 @@ python scripts/sample_mask_likelihood_maximization.py -r logs/2021-10-14T16-32-2
 --image_folder data/ffhq_edits/ --mask_folder data/ffhq_edits_masks/ --image_list data/ffhq_edits.txt --keep_img \
 --dilation_sampling 1 -k 100 -t 1.0 --batch_size 5 --bert --epochs 2  \
 --device 0 --random_order \
---mask_collage --collage_frequency 3 --gaussian_smoothing_collage
+--mask_collage --collage_frequency 3 --gaussian_smoothing_collage \
 --num_optim_steps 200
 ```
 
