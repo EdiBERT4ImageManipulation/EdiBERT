@@ -375,7 +375,7 @@ def load_model(config, ckpt, gpu, eval_mode, device):
     model = load_model_from_config(config.model, pl_sd["state_dict"], gpu=gpu, eval_mode=eval_mode, device=device)["model"]
     return model, global_step
 
-def perceptual_optimization(config, model, z, img, mask, opt):
+def perceptual_optimization(model, z, img, mask, opt):
     xz = model.first_stage_model.decode(z).detach()
     if opt.num_optim_steps > 0:
         z = Variable(z.data, requires_grad=True)
