@@ -60,6 +60,7 @@ python scripts/sample_mask_likelihood_maximization.py -r logs/2021-10-14T16-32-2
 --dilation_sampling 1 -k 100 -t 1.0 --batch_size 5 --bert --epochs 2  \
 --device 0 --random_order \
 --mask_collage --collage_frequency 3 --gaussian_smoothing_collage
+--num_optim_steps 200
 ```
 
 Then, launch the following script for edits images:
@@ -69,6 +70,7 @@ python scripts/sample_mask_likelihood_maximization.py -r logs/2021-10-14T16-32-2
 --dilation_sampling 1 -k 100 -t 1.0 --batch_size 5 --bert --epochs 2  \
 --device 0 --random_order \
 --mask_collage --collage_frequency 3 --gaussian_smoothing_collage
+--num_optim_steps 200
 ```
 
 The samples can then be found in `logs/my_model/samples/`.
