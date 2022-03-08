@@ -9,6 +9,8 @@ from einops import repeat
 import glob
 from scipy import ndimage
 import torchvision
+import lpips
+from torch.autograd import Variable
 
 from main import instantiate_from_config
 from taming.modules.transformer.mingpt import sample_with_past
@@ -91,6 +93,11 @@ def get_parser():
         nargs="?",
         help="the batch size",
         default=25
+    )
+    parser.add_argument(
+        "--num_optim_steps",
+        type=int,
+        default=0,
     )
     parser.add_argument(
         "--epochs",
@@ -343,8 +350,7 @@ def maximize_token_likelihood(model, img, mask, opt):
     z = torch.nn.functional.one_hot(z, n_toks).float()
     z = z @ model.first_stage_model.quantize.embedding.weight
     z = z.view([-1, toksY, toksX, e_dim]).permute(0, 3, 1, 2)
-    xz = model.first_stage_model.decode(z)
-    return xz
+    return z
 
 def load_model_from_config(config, sd, gpu=True, eval_mode=True, device=0):
     model = instantiate_from_config(config)
@@ -368,6 +374,21 @@ def load_model(config, ckpt, gpu, eval_mode, device):
         global_step = None
     model = load_model_from_config(config.model, pl_sd["state_dict"], gpu=gpu, eval_mode=eval_mode, device=device)["model"]
     return model, global_step
+
+def perceptual_optimization(config, model, z, img, mask, opt):
+    xz = model.first_stage_model.decode(z).detach()
+    if opt.num_optim_steps > 0:
+        z = Variable(z.data, requires_grad=True)
+        optimizer = torch.optim.AdamW([z], lr=0.1)
+        for j in range(opt.num_optim_steps):
+            xz_j = model.first_stage_model.decode(z)
+            loss = (opt.lperc(xz_j*mask,img*mask) + opt.lperc(xz_j*(1-mask),xz*(1-mask))).sum()
+
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+        xz = xz_j
+    return xz
 
 
 if __name__ == "__main__":
@@ -403,6 +424,7 @@ if __name__ == "__main__":
     opt.config = config
 
     model, global_step = load_model(config, ckpt, gpu=True, eval_mode=True, device=opt.device)
+    opt.lperc = lpips.LPIPS(net='vgg').to(model.device)
 
     if opt.outdir:
         print(f"Switching logdir from '{logdir}' to '{opt.outdir}'")
@@ -434,6 +456,8 @@ if __name__ == "__main__":
         base_str = base_str + '_gauss_smooth'
     if opt.mask_inference_token:
         base_str = base_str + '_mask_infToken'
+    if opt.num_optim_steps > 0:
+        base_str = base_str + f"_nOptim_{opt.num_optim_steps}"
     logdir = os.path.join(logdir, "samples", opt.mask_folder.split('/')[-2], base_str,
                       f"{global_step}")
 
@@ -465,7 +489,9 @@ if __name__ == "__main__":
             img = img * mask + torch.zeros_like(img) * (1-mask)
         img, mask = img.repeat(opt.batch_size,1,1,1), mask.repeat(opt.batch_size,1,1,1)
         print("Image: ", i, imgname, maskname, flush=True)
-        completed_img = maximize_token_likelihood(model, img, mask, opt)
+        z = maximize_token_likelihood(model, img, mask, opt)
+        xz = perceptual_optimization(model, z, img, mask, opt)
+
         save_batch_images(completed_img, logdir, imgname, key="samples", cond_key=None)
 
     print("done.")
