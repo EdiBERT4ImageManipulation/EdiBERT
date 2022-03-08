@@ -24,3 +24,4 @@ dependencies:
     - -e .
     - gdown
     - lpips
+    - matplotlib
