@@ -24,7 +24,7 @@ Download FFHQ dataset (https://github.com/NVlabs/ffhq-dataset) and put it into `
 
 In the logs/ folder, download and extract the FFHQ VQGAN:
 ```
-gdown --id '1P_wHLRfdzf1DjsAH_tG10GXk9NKEZqTg'
+gdown '1P_wHLRfdzf1DjsAH_tG10GXk9NKEZqTg'
 tar -xvzf 2021-04-23T18-19-01_ffhq_vqgan.tar.gz
 ```
 
@@ -42,13 +42,13 @@ python main.py --base configs/ffhq_transformer_bert_2D.yaml -t True --gpus 0,1
 
 In the logs/ folder, download and extract the FFHQ VQGAN:
 ```
-gdown --id '1P_wHLRfdzf1DjsAH_tG10GXk9NKEZqTg'
+gdown '1P_wHLRfdzf1DjsAH_tG10GXk9NKEZqTg'
 tar -xvzf 2021-04-23T18-19-01_ffhq_vqgan.tar.gz
 ```
 
 In the logs/ folder, download and extract  the FFHQ BERT:
 ```
-gdown --id '1YGDd8XyycKgBp_whs9v1rkYdYe4Oxfb3'
+gdown '1YGDd8XyycKgBp_whs9v1rkYdYe4Oxfb3'
 tar -xvzf 2021-10-14T16-32-28_ffhq_transformer_bert_2D.tar.gz
 ```
 folders and place them into logs.
