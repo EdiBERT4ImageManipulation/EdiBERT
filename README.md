@@ -2,6 +2,8 @@
 
 EdiBERT is a generative model based on a bidirectional transformer, suited for image manipulation. The same EdiBERT model, derived from a single training, can be used on a wide variety of tasks.
 
+For a quick start, a Colab Demo for editing tasks is available here: https://colab.research.google.com/github/EdiBERT4ImageManipulation/EdiBERT/blob/main/EdiBERT_demo.ipynb 
+
 ![edibert_example](https://user-images.githubusercontent.com/94860822/157225722-fab1a9a5-a7f2-4cd2-952c-367e9c9d8e3e.png)
 
 We follow the implementation of Taming-Transformers (https://github.com/CompVis/taming-transformers).
